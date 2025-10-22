@@ -14,7 +14,7 @@ export function startREPL() {
 
     state.readInput.prompt();
 
-    state.readInput.on("line", (input) => {
+    state.readInput.on("line", async (input) => {
         const cleaned = cleanInput(input);
         if (cleaned.length === 0) {
             state.readInput.prompt();
@@ -31,7 +31,7 @@ export function startREPL() {
         }
 
         try {
-            cmd.callback(state);
+            await cmd.callback(state);
         } catch (err) {
             console.log(err);
         }

@@ -1,6 +1,12 @@
-import {createInterface} from "node:readline";
+import { createInterface } from "node:readline";
+import { getCommands } from "./commands.js";
+
 
 export function cleanInput(input: string):string[] {
+    if (input.trim().length === 0) {
+        return [];
+    }
+
     return input.trim().toLowerCase().split(" ");
 }
 
@@ -18,8 +24,29 @@ export function startREPL() {
             readInput.prompt();
             return;
         }
-        console.log("Your command was: " + cleanedInput[0]);
+        const commands = getCommands();
+        const command = cleanedInput[0];
+
+        const commandToExecute = commands[command];
+        if (commandToExecute === undefined) {
+            console.log("Unknown command");
+            readInput.prompt();
+        }
+
+        try {
+            commandToExecute.callback(commands);
+        } catch (error) {
+            console.log(error);
+        }
+
+
+
+
+
         readInput.prompt();
     });
+
 }
+
+
 

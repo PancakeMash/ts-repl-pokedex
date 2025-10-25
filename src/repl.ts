@@ -22,6 +22,7 @@ export function startREPL() {
         }
 
         const cmdName = cleaned[0];
+        const args = cleaned.slice(1);
         const cmd = state.commands[cmdName];
 
         if (!cmd) {
@@ -31,7 +32,7 @@ export function startREPL() {
         }
 
         try {
-            await cmd.callback(state);
+            await cmd.callback(state, ...args);
         } catch (err) {
             console.log(err);
         }

@@ -1,8 +1,10 @@
+import { PokeAPI } from "./pokeapi.js";
+
 import { createInterface, type Interface } from "readline";
 import { command_exit } from "./command_exit.js";
 import { command_help } from "./command_help.js";
 import { command_map, command_mapb } from "./command_map.js";
-import { PokeAPI } from "./pokeapi.js";
+import { command_explore } from "./command_explore.js";
 
 
 export function initState(): State {
@@ -12,8 +14,7 @@ export function initState(): State {
         prompt: "Pokedex > "
     });
 
-    const pokeAPI = new PokeAPI();
-
+    const pokeAPI = new PokeAPI(60*1000);
 
     const commands: Record<string, CLICommand> = {
         exit: {
@@ -35,6 +36,11 @@ export function initState(): State {
             name: "mapb",
             description: "Goes back a page when listing location areas",
             callback: command_mapb
+        },
+        explore: {
+            name: "explore",
+            description: "Explore the location of an area",
+            callback: command_explore
         }
     };
 
@@ -51,7 +57,7 @@ export function initState(): State {
 export type CLICommand = {
     name: string,
     description: string,
-    callback: (state: State) => Promise<void>,
+    callback: (state: State, ...arg1: string[]) => Promise<void>,
 };
 
 export type State = {

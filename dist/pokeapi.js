@@ -35,4 +35,20 @@ export class PokeAPI {
         this.#cache.add(key, data);
         return data;
     }
+    async fetchPokemon(pokemonName) {
+        const fixedName = pokemonName.toLowerCase().trim();
+        const key = `${PokeAPI.baseURL}/pokemon/${fixedName}`;
+        const cacheHit = this.#cache.get(key);
+        if (cacheHit !== undefined) {
+            return cacheHit;
+        }
+        const response = await fetch(key);
+        if (!response.ok) {
+            console.log("Status: " + response.status);
+            throw new Error("Failed to fetch pokemon");
+        }
+        const data = await response.json();
+        this.#cache.add(key, data);
+        return data;
+    }
 }

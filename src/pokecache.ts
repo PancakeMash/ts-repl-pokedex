@@ -10,7 +10,6 @@ export class Cache {
         this.#startReapLoop();
     }
 
-
     add<T>(key: string, val: T):void {
         this.#cache.set(key, {
             createdAt: Date.now(),

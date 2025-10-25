@@ -4,6 +4,8 @@ import { command_exit } from "./command_exit.js";
 import { command_help } from "./command_help.js";
 import { command_map, command_mapb } from "./command_map.js";
 import { command_explore } from "./command_explore.js";
+import { command_catch } from "./command_catch.js";
+import { command_inspect } from "./command_inspect.js";
 export function initState() {
     const readInput = createInterface({
         input: process.stdin,
@@ -11,6 +13,7 @@ export function initState() {
         prompt: "Pokedex > "
     });
     const pokeAPI = new PokeAPI(60 * 1000);
+    const pokemonCaught = {};
     const commands = {
         exit: {
             name: "exit",
@@ -36,6 +39,16 @@ export function initState() {
             name: "explore",
             description: "Explore the location of an area",
             callback: command_explore
+        },
+        catch: {
+            name: "catch",
+            description: "Attempt to catch a pokemon",
+            callback: command_catch
+        },
+        inspect: {
+            name: "inspect",
+            description: "Shows information about a caught pokemon",
+            callback: command_inspect
         }
     };
     return {
@@ -44,5 +57,6 @@ export function initState() {
         pokeAPI,
         nextLocationsURL: null,
         prevLocationsURL: null,
+        pokemonCaught,
     };
 }

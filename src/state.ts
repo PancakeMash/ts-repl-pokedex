@@ -7,6 +7,7 @@ import { command_map, command_mapb } from "./command_map.js";
 import { command_explore } from "./command_explore.js";
 import { command_catch } from "./command_catch.js";
 import { command_inspect } from "./command_inspect.js";
+import {command_pokedex} from "./command_pokedex.js";
 
 
 export function initState(): State {
@@ -55,6 +56,11 @@ export function initState(): State {
             name: "inspect",
             description: "Shows information about a caught pokemon",
             callback: command_inspect
+        },
+        pokedex: {
+            name: "pokedex",
+            description: "List all caught pokemon",
+            callback: command_pokedex
         }
     };
 
